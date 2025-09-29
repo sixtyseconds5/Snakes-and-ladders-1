@@ -17,6 +17,7 @@ function coordToIndex(row, col) {
 }
 
 export default function Home() {
+  const [started, setStarted] = useState(false);
   const [position, setPosition] = useState(1);
   const [die, setDie] = useState(null);
   const [message, setMessage] = useState('Welcome to Snakes & Ladders!');
@@ -41,11 +42,28 @@ export default function Home() {
     if (next === 100) setMessage('🎉 You reached 100. You win!');
   };
 
+  const handleReset = () => {
+    setPosition(1); setDie(null); setHistory([]);
+    setMessage('Game reset. Good luck!');
+  };
+
+  if (!started) {
+    return (
+      <div style={{ fontFamily: 'Inter, sans-serif', padding: 40, textAlign: 'center' }}>
+        <img src="/splash.png" alt="Splash" style={{ maxWidth: '80%', marginBottom: 20 }} />
+        <h1>Snakes & Ladders</h1>
+        <p>Classic board game inside Farcaster</p>
+        <button onClick={() => setStarted(true)} style={{ fontSize: 18, padding: '12px 24px', borderRadius: 8 }}>▶ Play</button>
+      </div>
+    );
+  }
+
   return (
     <div style={{ fontFamily: 'Inter, sans-serif', padding: 20 }}>
       <h1>Snakes & Ladders</h1>
       <p>{message}</p>
       <button onClick={handleRoll}>Roll Dice</button>
+      <button onClick={handleReset} style={{ marginLeft: 10 }}>Reset</button>
       <div style={{marginTop:10}}>Current: {position} | Last roll: {die ?? '-'}</div>
       <h3>Last moves</h3>
       <ul>{history.map((h,i)=><li key={i}>{h.note}</li>)}</ul>
@@ -57,14 +75,23 @@ export default function Home() {
 function Board({ position }) {
   const rows = Array.from({ length: 10 }, (_, r) => r);
   return (
-    <div style={{ width: 520, height: 520, display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: 2 }}>
+    <div style={{ width: 520, height: 520, display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: 2, marginTop: 20 }}>
       {rows.map(row => (
         Array.from({ length: 10 }, (_, c) => {
           const idx = coordToIndex(row, c);
           const isHere = idx === position;
           const jump = JUMPS[idx];
           return (
-            <div key={`${row}-${c}`} style={{ border: '1px solid #ddd', background: isHere ? '#fffae6' : '#fff', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', fontSize: 12 }}>
+            <div key={`${row}-${c}`} style={{
+              border: '1px solid #ddd',
+              background: isHere ? '#fffae6' : '#fff',
+              height: 52,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              fontSize: 12
+            }}>
               <div style={{ position: 'absolute', left: 6, top: 6 }}>{idx}</div>
               <div>{isHere ? '🐍🟢' : ''}</div>
               {jump && (
