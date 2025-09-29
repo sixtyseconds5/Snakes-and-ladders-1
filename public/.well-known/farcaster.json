@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjI5OTM5NSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDQxQTBlMTNjMzdCOWRCNzgwMzIzMEQ0NjA4Mjc2MDczMEJiNDIxM2YifQ",
+    "payload": "eyJkb21haW4iOiJzbmFrZXMtYW5kLWxhZGRlcnMtMS52ZXJjZWwuYXBwIn0",
+    "signature": "MHgxOGVjN2UzNTg0YTdjYTJiNzFkZjNhOTkzMTdlMjk1MjJmNjMyZTYzMzU0NmM2NWUxZTc0ZjlmODkyMzg0NDk1MDdhZDE5NGMzNjJmZDA2ODMxMDJiNmQwNzA2MDgzMmE5ZjQ5ZTVjMmI3MWM3MWY3ZDQ4ODU1NzBjMjk5ZTJjYzFi"
+  },
+  "frame": {
+    "version": "1",
+    "name": "Snakes And Ladders",
+    "iconUrl": "https://snakes-and-ladders-1.vercel.app/icon.png",
+    "homeUrl": "https://snakes-and-ladders-1.vercel.app",
+    "imageUrl": "https://snakes-and-ladders-1.vercel.app/image.png",
+    "buttonTitle": "Check this out",
+    "splashImageUrl": "https://snakes-and-ladders-1.vercel.app/splash.png",
+    "splashBackgroundColor": "#eeccff",
+    "webhookUrl": "https://snakes-and-ladders-1.vercel.app/api/webhook"
+  }
+}
