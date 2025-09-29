@@ -1,12 +1,1 @@
-# Snakes & Ladders Miniapp
-
-## Run locally
-```bash
-npm install
-npm run dev
-```
-
-Then expose via Cloudflare Tunnel or ngrok because Farcaster requires public HTTPS.
-
-## Deploy
-Push to GitHub, connect to Vercel, and deploy. Ensure `/.well-known/farcaster.json` is reachable.
+# Snakes & Ladders Miniapp (Upgraded)\n\n- Flat style assets for dice, snake, ladder\n- Animated dice roll (gif)\n- Tile board with alternating colors\n- Limit 10 rolls per day\n

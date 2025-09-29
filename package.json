@@ -1,6 +1,6 @@
 {
   "name": "snakes-and-ladders-miniapp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
@@ -11,6 +11,6 @@
     "next": "14.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@farcaster/miniapp-sdk": "^1.0.0"
+    "@farcaster/miniapp-sdk": "*"
   }
 }
