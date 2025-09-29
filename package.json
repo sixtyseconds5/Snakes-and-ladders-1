@@ -1,6 +1,6 @@
 {
-  "name": "snakes-and-ladders-miniapp",
-  "version": "0.2.0",
+  "name": "snakes-and-ladders-final-image",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
