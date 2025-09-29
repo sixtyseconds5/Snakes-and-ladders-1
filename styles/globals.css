@@ -1,3 +1,4 @@
 html,body,#__next { height: 100%; }
 body { margin: 0; font-family: Inter, sans-serif; background: #fafafa; color: #111; }
-button { cursor: pointer; }
+button { cursor: pointer; font-size: 16px; padding: 8px 16px; border-radius: 6px; border: 1px solid #ccc; background: #fff; }
+button:disabled { background: #eee; color: #999; }
