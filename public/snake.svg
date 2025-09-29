@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <defs>
+    <linearGradient id="snakeGrad" x1="0" x2="1">
+      <stop offset="0%" stop-color="#2b7d59"/>
+      <stop offset="100%" stop-color="#17613f"/>
+    </linearGradient>
+    <pattern id="scales" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0 16 Q10 0 20 16 Z" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+    <filter id="snakeShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <symbol id="snakeSymbol" viewBox="0 0 300 200">
+      <g filter="url(#snakeShadow)">
+        <path d="M20 160 C80 120, 120 40, 180 60 C240 80, 260 40, 280 20"
+              stroke="url(#snakeGrad)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </g>
+      <path d="M20 160 C80 120, 120 40, 180 60 C240 80, 260 40, 280 20"
+            stroke="#0f3e2b" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <defs>
+        <mask id="strokeMask">
+          <rect x="0" y="0" width="300" height="200" fill="black"/>
+          <path d="M20 160 C80 120, 120 40, 180 60 C240 80, 260 40, 280 20"
+                stroke="white" stroke-width="22" stroke-linecap="round" fill="none"/>
+        </mask>
+      </defs>
+      <rect x="0" y="0" width="300" height="200" fill="url(#scales)" mask="url(#strokeMask)" opacity="0.6"/>
+      <g transform="translate(278,18) rotate(20)">
+        <path d="M0 0 C12 -6, 34 -6, 38 6 C42 18, 30 28, 14 24 C0 20 -6 8 0 0"
+              fill="#2b7d59" stroke="#0f3e2b" stroke-width="2"/>
+        <circle cx="26" cy="6" r="3" fill="#fff"/>
+        <circle cx="26.5" cy="6.5" r="1.2" fill="#000"/>
+        <path d="M36 8 L44 2" stroke="#d33" stroke-width="2" stroke-linecap="round"/>
+        <path d="M36 10 L44 4" stroke="#d33" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </symbol>
+  </defs>
+  <use href="#snakeSymbol" x="0" y="0" width="300" height="200"/>
+</svg>
