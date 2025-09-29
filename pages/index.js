@@ -189,30 +189,24 @@ export default function Home(){
             </div>
           ))}
 
-          <svg className="svg-layer" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+
+          {/* Image layer: realistic PNG snakes and ladders */}
+          <div className="svg-layer" style={{position:'absolute'}}>
             {visual.map((j,i)=>{
               const s = indexToPercent(j.start); const e = indexToPercent(j.end);
-              if(j.type==='snake'){
-                const path = makeCurvePath(s.left,s.top,e.left,e.top);
-                return (<g key={'s'+i}><path d={path} className="snake-path" /><circle cx={s.left} cy={s.top} r="1.6" className="snake-head" /></g>);
-              } else {
-                // ladder rails and rungs: draw group rotated to angle, rails separated
-                const sx = s.left, sy = s.top, ex = e.left, ey = e.top;
-                const dx = ex - sx, dy = ey - sy;
-                const angle = Math.atan2(dy,dx) * 180/Math.PI;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                return (
-                  <g key={'l'+i} transform={`translate(${(sx+ex)/2} ${(sy+ey)/2}) rotate(${angle})`}>
-                    <line x1={-dist/2} y1={-2.4} x2={dist/2} y2={-2.4} className="ladder-rail" />
-                    <line x1={-dist/2} y1={2.4} x2={dist/2} y2={2.4} className="ladder-rail" />
-                    {Array.from({length:Math.max(3,Math.floor(dist/7))}).map((_,k)=>(
-                      <line key={k} x1={-dist/2 + (k+1)*(dist/(Math.max(4,Math.floor(dist/7))+1))} y1={-2.4} x2={-dist/2 + (k+1)*(dist/(Math.max(4,Math.floor(dist/7))+1))} y2={2.4} className="ladder-rung" />
-                    ))}
-                  </g>
-                );
-              }
+              const dx = e.left - s.left; const dy = e.top - s.top;
+              const angle = Math.atan2(dy,dx) * 180 / Math.PI;
+              const dist = Math.sqrt(dx*dx + dy*dy);
+              // width % relative to board
+              const widthPercent = Math.max(8, dist);
+              const left = (s.left + e.left)/2 - widthPercent/2;
+              const top = (s.top + e.top)/2 - 3.5;
+              const src = j.type==='snake' ? '/assets/snake-real.png' : '/assets/ladder-real.png';
+              const imgStyle = { position:'absolute', left: left + '%', top: top + '%', width: widthPercent + '%', height: (j.type==='snake'? (widthPercent*2.8)+'%':'20%'), transform:`rotate(${angle}deg)`, transformOrigin:'center center', pointerEvents:'none' };
+              return (<img key={'img'+i} src={src} style={imgStyle} alt={j.type}/>);
             })}
-          </svg>
+          </div>
+
 
           {/* pawns positioned by percent coords */}
           <img src="/assets/pawn-blue.png" className="pawn" style={{left: p1Coord.left + '%', top: p1Coord.top + '%'}} alt="p1" />
