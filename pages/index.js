@@ -9,10 +9,69 @@ const JUMPS = {
 const CELL = 52; const GAP=2;
 
 function rollDie(){ return Math.floor(Math.random()*6)+1; }
-function indexToCoord(idx){ const i = idx-1; const rowFromBottom=Math.floor(i/10); const row=9-rowFromBottom; const colInRow=i%10; const left=((rowFromBottom%2===0)? colInRow:(9-colInRow))*(CELL+GAP)+CELL/2+10; const top=(row)*(CELL+GAP)+CELL/2+10; return {left, top}; }
+function indexToCoord(idx){
+  const i = idx-1;
+  const rowFromBottom = Math.floor(i/10);
+  const row = 9 - rowFromBottom;
+  const colInRow = i % 10;
+  const x = ((rowFromBottom % 2 === 0) ? colInRow : (9 - colInRow)) * 10 + 5; // center in percent
+  const y = row * 10 + 5;
+  return { left: x + "%", top: y + "%", leftNum: x, topNum: y };
+}
 
 function getKey(player){ return `rolls-p${player}-${new Date().toISOString().slice(0,10)}`; }
 function getRollCount(player){ return parseInt(localStorage.getItem(getKey(player))||'0',10); }
+
+// Visual jumps mapping for rendering long snake/ladder images (start -> end)
+const VISUAL_JUMPS = [
+  // ladders (start low -> end high)
+  {start:4,end:14,type:'ladder'},
+  {start:9,end:31,type:'ladder'},
+  {start:21,end:42,type:'ladder'},
+  {start:28,end:84,type:'ladder'},
+  {start:51,end:67,type:'ladder'},
+  {start:63,end:81,type:'ladder'},
+  {start:72,end:91,type:'ladder'},
+  // snakes (start high -> end low)
+  {start:99,end:78,type:'snake'},
+  {start:92,end:54,type:'snake'},
+  {start:85,end:43,type:'snake'},
+  {start:70,end:40,type:'snake'},
+  {start:62,end:19,type:'snake'},
+  {start:48,end:26,type:'snake'},
+  {start:36,end:6,type:'snake'}
+];
+
+function renderJumpImage(jump, indexToCoord) {
+  // calculate center coords of start and end
+  const s = indexToCoord(jump.start);
+  const e = indexToCoord(jump.end);
+  const dx = e.left - s.left;
+  const dy = e.top - s.top;
+  const distance = Math.sqrt(dx*dx + dy*dy);
+  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+  const percentWidth = Math.sqrt(dx*dx + dy*dy) / 520 * 100; // relative to board 100%
+  const style = {
+    position: 'absolute',
+    left: ((s.leftNum + e.leftNum)/2 - percentWidth/2) + "%",
+    top: ((s.topNum + e.topNum)/2 - 2) + "%",
+    width: percentWidth + "%",
+    height: '6%',
+
+    position: 'absolute',
+    left: (s.left + e.left)/2 - distance/2 + 'px',
+    top: (s.top + e.top)/2 - 20 + 'px',
+    width: distance + 'px',
+    height: '40px',
+    transform: `rotate(${angle}deg)`,
+    transformOrigin: 'center center',
+    pointerEvents: 'none',
+    opacity: 0.95
+  };
+  const src = jump.type === 'snake' ? '/assets/snake-curve.png' : '/assets/ladder-long.png';
+  return (<img key={`jump-${jump.start}-${jump.end}`} src={src} style={style} />);
+}
+
 function incrementRollCount(player){ const c=getRollCount(player)+1; localStorage.setItem(getKey(player),c); return c; }
 
 export default function Home(){
@@ -87,6 +146,7 @@ export default function Home(){
               </div>
             ))}
           </div>
+          {VISUAL_JUMPS.map(j => renderJumpImage(j, indexToCoord))}
           <img src="/assets/pawn-blue.png" className="pawn" style={{left:p1Coord.left, top:p1Coord.top, filter:cur===1?'drop-shadow(0 8px 16px rgba(59,130,246,0.25))':''}} alt="p1"/>
           <img src="/assets/pawn-red.png" className="pawn" style={{left:p2Coord.left, top:p2Coord.top, filter:cur===2?'drop-shadow(0 8px 16px rgba(239,68,68,0.25))':''}} alt="p2"/>
         </div>
